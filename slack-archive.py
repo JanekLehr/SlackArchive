@@ -13,7 +13,7 @@ from slacker import Slacker
 app = Flask(__name__)
 env = dict()
 slack = None
-inactive_time = 1  # days
+inactive_time = 7  # days
 bot_username = 'slack-archive'
 
 
@@ -27,10 +27,10 @@ def is_channel_active(channel, current_datetime):
 
 
 def notify_channel_creator(channel):
-    # creator = channel['creator']
-    # response = slack.im.open(creator)
-    # This is janeklehr b-ailse user id for test purposes
-    response = slack.im.open('U03TZ9WNB')
+    creator = channel['creator']
+    response = slack.im.open(creator)
+    # This is janeklehr's b-aisle user id for test purposes
+    # response = slack.im.open('U03TZ9WNB')
     im_channel = response.body["channel"]["id"]
     message = "#%s has been inactive for %d days or more so it needs to be archived. You may use this " \
               "link to archive it.\n%s%s" % (channel['name'], inactive_time, request.url_root[:-1],
